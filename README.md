@@ -44,7 +44,7 @@ npx vercel
 
 Follow the prompts to log in and deploy.
 
-**Production URL:** [https://ddamuliracharles.dev](https://ddamuliracharles.dev) (also [portifoliowebsite-gold.vercel.app](https://portifoliowebsite-gold.vercel.app))
+**Production URL:** [https://ddamuliracharles.vercel.app](https://ddamuliracharles.vercel.app) (custom domain [ddamuliracharles.dev](https://ddamuliracharles.dev) after you register it)
 
 **Custom domain DNS** — at your `.dev` registrar, add:
 
