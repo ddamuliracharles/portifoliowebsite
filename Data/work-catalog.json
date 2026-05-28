@@ -2,110 +2,139 @@
   "projects": [
     {
       "name": "Traffic Monitoring GIS",
-      "description": "GIS platform mapping roads, traffic lights, and weigh bridges for improved, trackable road usage across the network.",
+      "description": "A GIS that maps all roads and communicates with traffic lights and weigh bridges to bring about improved, trackable road usage.",
       "url": "https://github.com/ddamuliracharles/TRAFFIC-MONITERING-SYSTEM-DEMOSTRATION",
       "language": "TypeScript",
       "kind": "personal",
       "role": "Lead Developer",
-      "tags": ["TypeScript", "GIS", "Leaflet", "Traffic Systems"],
-      "mermaidDiagram": "flowchart TB\n  subgraph field [Field Layer]\n    Roads[Road Network Map]\n    Lights[Traffic Lights]\n    Bridges[Weigh Bridges]\n  end\n  subgraph core [Application Core]\n    API[GIS API Service]\n    Events[Event Ingestion]\n  end\n  subgraph ui [Presentation]\n    Dash[Operations Dashboard]\n    Reports[Usage Reports]\n  end\n  Roads --> API\n  Lights --> Events\n  Bridges --> Events\n  API --> Dash\n  Events --> Reports"
+      "tags": ["TypeScript", "GIS", "Traffic Systems"],
+      "mermaidDiagram": "flowchart TB\n  Roads[Road Network GIS] --> API[Traffic API]\n  Lights[Traffic Lights] --> API\n  Bridges[Weigh Bridges] --> API\n  API --> Dashboard[Monitoring Dashboard]\n  API --> Reports[Trackable Usage Reports]"
     },
     {
       "name": "WiFi Management System",
-      "description": "Scalable WiFi management for commercial deployments and organisations—user access, billing hooks, and network monitoring.",
+      "description": "This system deals with the management of scalable WiFi systems for commercial use and organisations.",
       "url": "https://github.com/ddamuliracharles/wifi_system",
       "language": "JavaScript",
       "kind": "personal",
       "role": "Full-Stack Developer",
-      "tags": ["JavaScript", "Node.js", "Networking"],
-      "mermaidDiagram": "flowchart LR\n  Admin[Admin Portal] --> API[Management API]\n  API --> Auth[Authentication]\n  API --> RADIUS[RADIUS / AP Control]\n  API --> DB[(User & Session DB)]\n  Clients[End Users] --> Portal[Captive Portal]\n  Portal --> API"
+      "tags": ["JavaScript", "WiFi", "Commercial", "Networking"],
+      "mermaidDiagram": "flowchart LR\n  Org[Organisation Admin] --> Portal[Management Portal]\n  Portal --> API[WiFi Control API]\n  API --> APs[Access Points]\n  API --> Billing[Usage & Billing]\n  Users[End Users] --> Captive[Captive Portal]\n  Captive --> API"
+    },
+    {
+      "name": "School Finance Management System",
+      "description": "Manages all finance activities in a school—from recording payments and promotions to expenses, tax management, and detailed summaries with insights.",
+      "url": "https://github.com/ddamuliracharles/SchoolFinanceManagementSystem",
+      "language": "JavaScript",
+      "kind": "private",
+      "role": "Lead Developer",
+      "isPrivate": true,
+      "tags": ["JavaScript", "Finance", "Education", "Private"],
+      "mermaidDiagram": "flowchart TB\n  Staff[School Staff] --> App[Finance App]\n  App --> Payments[Payments & Promotions]\n  App --> Expenses[Expenses]\n  App --> Tax[Tax Management]\n  Payments --> DB[(Finance Database)]\n  Expenses --> DB\n  Tax --> DB\n  DB --> Insights[Summaries & Insights]"
+    },
+    {
+      "name": "Gold Trading — Macro Quant Model",
+      "description": "Learning the macro and micro factors that influence the movement of gold, combined with quantitative modelling and technical analysis.",
+      "url": "https://github.com/ddamuliracharles/Gold-trading-macro-based-quant-model",
+      "language": "Python",
+      "kind": "private",
+      "role": "Developer / Researcher",
+      "isPrivate": true,
+      "tags": ["Python", "Quant", "Gold", "Macroeconomics", "Private"],
+      "mermaidDiagram": "flowchart LR\n  Macro[Macro Indicators] --> Model[Quant Model]\n  Micro[Micro / Market Data] --> Model\n  TA[Technical Analysis] --> Model\n  Model --> Signals[Trade Signals]\n  Signals --> Backtest[Backtesting]"
+    },
+    {
+      "name": "Gold Trading Strategy",
+      "description": "Strategy research on macro and micro drivers of gold prices, with technical analysis layered into decision rules.",
+      "url": "https://github.com/ddamuliracharles/Gold-trading-strategy",
+      "language": "Python",
+      "kind": "private",
+      "role": "Developer",
+      "isPrivate": true,
+      "tags": ["Python", "Trading", "Technical Analysis", "Private"],
+      "mermaidDiagram": "flowchart TB\n  Data[Market Data Feeds] --> Features[Feature Engineering]\n  Features --> Strategy[Strategy Engine]\n  Strategy --> Risk[Risk Rules]\n  Risk --> Output[Signals & Reports]"
     },
     {
       "name": "AI Agent with LangChain",
-      "description": "AI agent workflows using LangChain for automation, tool use, and structured reasoning over business tasks.",
+      "description": "AI agent experiments using LangChain for intelligent automation and tool-augmented workflows.",
       "url": "https://github.com/ddamuliracharles/AI-agent-with-langchain",
       "language": "Python",
       "kind": "personal",
       "role": "Developer",
-      "tags": ["Python", "LangChain", "LLM"],
-      "mermaidDiagram": "flowchart TB\n  User[User Prompt] --> Agent[LangChain Agent]\n  Agent --> Tools[Tool Router]\n  Tools --> Search[Web / Data Tools]\n  Tools --> API[External APIs]\n  Agent --> Memory[Conversation Memory]\n  Agent --> Output[Structured Response]"
+      "tags": ["Python", "LangChain", "AI Agents"],
+      "mermaidDiagram": "flowchart TB\n  User[User] --> Agent[LangChain Agent]\n  Agent --> Tools[Tools]\n  Agent --> LLM[Language Model]\n  Tools --> Output[Response]"
     },
     {
       "name": "LangGraph & Streamlit Application",
-      "description": "Multi-step agent orchestration with LangGraph and an interactive Streamlit front end for demos and testing.",
+      "description": "LangGraph orchestration with a Streamlit UI for multi-step AI agent demos.",
       "url": "https://github.com/ddamuliracharles/Langgraph-and-streamlit-application",
       "language": "Python",
       "kind": "personal",
       "role": "Developer",
       "tags": ["Python", "LangGraph", "Streamlit"],
-      "mermaidDiagram": "flowchart LR\n  UI[Streamlit UI] --> Graph[LangGraph State Machine]\n  Graph --> Step1[Research Node]\n  Graph --> Step2[Action Node]\n  Graph --> Step3[Review Node]\n  Step3 --> UI"
+      "mermaidDiagram": "flowchart LR\n  UI[Streamlit UI] --> Graph[LangGraph]\n  Graph --> Nodes[Agent Nodes]\n  Nodes --> UI"
     },
     {
       "name": "HOT Backend",
-      "description": "Backend experiments focused on cleaner architecture, productive API patterns, and maintainable service design.",
+      "description": "Trying out cleaner, more productive ways of writing backend code and APIs.",
       "url": "https://github.com/ddamuliracharles/HOT_BACKEND",
       "language": "JavaScript",
       "kind": "personal",
       "role": "Backend Developer",
-      "tags": ["JavaScript", "REST", "API Design"],
-      "mermaidDiagram": "flowchart TB\n  Client[HTTP Clients] --> Gateway[API Gateway Layer]\n  Gateway --> Services[Domain Services]\n  Services --> Repo[Repository Layer]\n  Repo --> DB[(Database)]"
+      "tags": ["JavaScript", "Node.js", "API Design"],
+      "mermaidDiagram": "flowchart TB\n  Client[Clients] --> API[REST API]\n  API --> Services[Service Layer]\n  Services --> DB[(Database)]"
+    },
+    {
+      "name": "Group Charles — Team Project",
+      "description": "Team project repository—collaborative delivery where teamwork drives shared outcomes.",
+      "url": "https://github.com/ddamuliracharles/group-charles",
+      "language": "CSS",
+      "kind": "organization",
+      "organization": "Team — group-charles",
+      "role": "Team Member",
+      "isPrivate": true,
+      "tags": ["CSS", "Teamwork", "Collaboration", "Private"],
+      "mermaidDiagram": "flowchart LR\n  Members[Team Members] --> Repo[Shared Repository]\n  Repo --> Branches[Feature Branches]\n  Branches --> PR[Pull Requests]\n  PR --> Main[main]"
     },
     {
       "name": "Homecare Website",
-      "description": "Marketing and information website for a homecare services business with responsive layout and contact flows.",
+      "description": "Website for a homecare services business.",
       "url": "https://github.com/ddamuliracharles/homecare-website",
       "language": "Web",
       "kind": "personal",
       "role": "Web Developer",
       "tags": ["HTML", "CSS", "Business"],
-      "mermaidDiagram": "flowchart LR\n  Visitor[Visitors] --> Site[Static Site]\n  Site --> Services[Services Pages]\n  Site --> Contact[Contact Form]\n  Contact --> Email[Email Notification]"
+      "mermaidDiagram": "flowchart LR\n  Visitor[Visitors] --> Site[Website]\n  Site --> Info[Services Info]\n  Site --> Contact[Contact]"
+    },
+    {
+      "name": "Foundational Comms Website",
+      "description": "Communications-focused website project for foundational messaging and web presence.",
+      "url": "https://github.com/ddamuliracharles/foundational-comms-website",
+      "language": "Web",
+      "kind": "personal",
+      "role": "Web Developer",
+      "tags": ["Web", "Communications"],
+      "mermaidDiagram": "flowchart LR\n  User[Users] --> Site[Comms Website]\n  Site --> Content[Content Pages]\n  Site --> CTA[Calls to Action]"
+    },
+    {
+      "name": "Git Journey",
+      "description": "Learning Git and GitHub through hands-on practice and experiments.",
+      "url": "https://github.com/ddamuliracharles/gitjourney",
+      "language": "Git",
+      "kind": "personal",
+      "role": "Developer",
+      "tags": ["Git", "GitHub", "Learning"],
+      "mermaidDiagram": "flowchart LR\n  Local[Local Repo] -->|commit| Remote[GitHub Remote]\n  Remote -->|pull| Local"
     },
     {
       "name": "Final Year Project",
-      "description": "Collaborative university final-year software project—shared modules, reviews, and delivery as part of a student team.",
+      "description": "Collaborative university final-year software project with shared modules and team delivery.",
       "url": "https://github.com/Mulindwa-Raymond/FINAL-YEAR-PROJECT",
       "language": "Multi-stack",
       "kind": "contribution",
       "organization": "Mulindwa-Raymond",
-      "role": "Contributor — Backend & Integration",
-      "tags": ["Team Project", "University", "GitHub"],
-      "mermaidDiagram": "flowchart TB\n  subgraph team [Team Repository]\n    FE[Frontend Module]\n    BE[Backend Module]\n    DB[(Shared Database)]\n  end\n  FE --> BE\n  BE --> DB\n  Charles[My Contributions] --> BE\n  Charles --> PR[Pull Requests & Reviews]"
-    },
-    {
-      "name": "Enterprise Resource Module",
-      "description": "Private ASP.NET Core module for internal business operations—inventory, reporting, and role-based access. Source under NDA.",
-      "url": null,
-      "language": "C#",
-      "kind": "private",
-      "organization": "Commercial Client",
-      "role": "Backend Developer",
-      "isPrivate": true,
-      "tags": ["C#", "ASP.NET Core", "SQL Server", "Private"],
-      "mermaidDiagram": "flowchart LR\n  Users[Staff Users] --> Web[ASP.NET Core App]\n  Web --> Auth[Identity & RBAC]\n  Web --> Modules[Business Modules]\n  Modules --> SQL[(SQL Server)]\n  Modules --> Reports[PDF / Excel Reports]"
-    },
-    {
-      "name": "GIS Data Ingestion Pipeline",
-      "description": "Private geospatial ETL pipeline normalising road and sensor feeds for downstream analytics dashboards.",
-      "url": null,
-      "language": "Python",
-      "kind": "private",
-      "organization": "Infrastructure Team",
-      "role": "GIS Engineer",
-      "isPrivate": true,
-      "tags": ["Python", "GIS", "ETL", "Private"],
-      "mermaidDiagram": "flowchart TB\n  Sources[Shapefiles / APIs] --> ETL[ETL Workers]\n  ETL --> Validate[Validation Rules]\n  Validate --> Store[(PostGIS)]\n  Store --> Dash[Analytics Dashboard]"
-    },
-    {
-      "name": "Organisation Admin Portal",
-      "description": "Internal admin portal for a client organisation—user provisioning, audit logs, and integration with existing LDAP.",
-      "url": null,
-      "language": "C#",
-      "kind": "organization",
-      "organization": "Client Organisation",
-      "role": "Full-Stack Developer",
-      "isPrivate": true,
-      "tags": ["C#", ".NET", "LDAP", "Organisation"],
-      "mermaidDiagram": "sequenceDiagram\n  Admin->>Portal: Manage users\n  Portal->>LDAP: Sync directory\n  Portal->>API: Audit events\n  API->>DB: Persist logs"
+      "role": "Contributor",
+      "tags": ["University", "Team Project", "Contribution"],
+      "mermaidDiagram": "flowchart TB\n  Team[Student Team] --> Repo[FINAL-YEAR-PROJECT]\n  Charles[My commits & PRs] --> Repo"
     }
   ]
 }
