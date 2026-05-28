@@ -2,18 +2,30 @@
 bin/
 obj/
 /out/
+publish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.idea/
+
+## Build & deploy
 dist/
 .vercel/
 node_modules/
-*.user
-*.suo
-.vs/
-.idea/
+npm-debug.log*
 
 ## OS
 Thumbs.db
 .DS_Store
+Desktop.ini
 
-## Secrets
+## Secrets & local config
 appsettings.*.local.json
 *.pfx
+.env
+.env.*
+
+## Cursor / editor
+.cursor/
