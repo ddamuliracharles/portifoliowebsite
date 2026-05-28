@@ -133,7 +133,8 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <h3>Email</h3>
-                    <a href="mailto:@p.Email">@p.Email</a>
+                    <a href="mailto:@p.Email?subject=Portfolio%20inquiry">@p.Email</a>
+                    <button type="button" class="contact-copy" id="copy-email-btn">Copy email</button>
                 </div>
                 <div class="contact-item">
                     <h3>Phone</h3>
@@ -149,22 +150,24 @@
                 </div>
             </div>
             <form class="contact-form" id="contact-form" novalidate>
+                <input type="text" name="_gotcha" class="contact-form__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
                 <div class="form-row">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required autocomplete="name" />
+                    <input type="text" id="name" name="name" required autocomplete="name" maxlength="120" />
                 </div>
                 <div class="form-row">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required autocomplete="email" />
+                    <label for="email">Your email</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" maxlength="254" />
                 </div>
                 <div class="form-row">
                     <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" required />
+                    <input type="text" id="subject" name="subject" required maxlength="200" />
                 </div>
                 <div class="form-row">
                     <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <textarea id="message" name="message" rows="5" required minlength="10" maxlength="5000"></textarea>
                 </div>
+                <p id="contact-status" class="contact-status" role="status" aria-live="polite" hidden></p>
                 <button type="submit" class="btn btn--primary btn--full">Send Message</button>
             </form>
         </div>
@@ -175,6 +178,10 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <script src="~/js/projects.js" asp-append-version="true"></script>
     <script>
-        window.portfolioContact = { email: "@p.Email" };
+        window.portfolioContact = {
+            email: "@p.Email",
+            formsubmitUrl: "https://formsubmit.co/ajax/@p.Email"
+        };
     </script>
+    <script src="~/js/contact.js" asp-append-version="true"></script>
 }

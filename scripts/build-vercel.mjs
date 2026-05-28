@@ -19,6 +19,7 @@ rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 cpSync("wwwroot/css", join(dist, "css"), { recursive: true });
 cpSync("wwwroot/js/site.js", join(dist, "js/site.js"));
+cpSync("wwwroot/js/contact.js", join(dist, "js/contact.js"));
 cpSync("wwwroot/js/projects.js", join(dist, "js/projects.js"));
 cpSync("wwwroot/images", join(dist, "images"), { recursive: true });
 cpSync("vercel/portfolio.js", join(dist, "js/portfolio.js"));
@@ -214,16 +215,18 @@ const html = `<!DOCTYPE html>
         <p class="section-desc">Have a project in mind? I'd love to hear about it.</p>
         <div class="contact-grid">
           <div class="contact-info">
-            <div class="contact-item"><h3>Email</h3><a href="mailto:${esc(profile.email)}">${esc(profile.email)}</a></div>
+            <div class="contact-item"><h3>Email</h3><a href="mailto:${esc(profile.email)}?subject=Portfolio%20inquiry">${esc(profile.email)}</a><button type="button" class="contact-copy" id="copy-email-btn">Copy email</button></div>
             <div class="contact-item"><h3>Phone</h3><a href="tel:+256786398295">${esc(profile.phone)}</a></div>
             <div class="contact-item"><h3>Location</h3><p>${esc(profile.location)}</p></div>
             <div class="contact-item"><h3>GitHub</h3><a href="${esc(profile.githubUrl)}" target="_blank" rel="noopener noreferrer">@${esc(profile.githubUsername)}</a></div>
           </div>
           <form class="contact-form" id="contact-form" novalidate>
-            <div class="form-row"><label for="name">Name</label><input type="text" id="name" name="name" required autocomplete="name" /></div>
-            <div class="form-row"><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email" /></div>
-            <div class="form-row"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required /></div>
-            <div class="form-row"><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
+            <input type="text" name="_gotcha" class="contact-form__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div class="form-row"><label for="name">Name</label><input type="text" id="name" name="name" required autocomplete="name" maxlength="120" /></div>
+            <div class="form-row"><label for="email">Your email</label><input type="email" id="email" name="email" required autocomplete="email" maxlength="254" /></div>
+            <div class="form-row"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required maxlength="200" /></div>
+            <div class="form-row"><label for="message">Message</label><textarea id="message" name="message" rows="5" required minlength="10" maxlength="5000"></textarea></div>
+            <p id="contact-status" class="contact-status" role="status" aria-live="polite" hidden></p>
             <button type="submit" class="btn btn--primary btn--full">Send Message</button>
           </form>
         </div>
@@ -237,9 +240,10 @@ const html = `<!DOCTYPE html>
     </div>
   </footer>
   <script>window.__PROFILE__ = ${JSON.stringify(profile)};</script>
-  <script>window.portfolioContact = { email: "${esc(profile.email)}" };</script>
+  <script>window.portfolioContact = { email: "${esc(profile.email)}", formsubmitUrl: "https://formsubmit.co/ajax/${esc(profile.email)}" };</script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
   <script src="/js/site.js"></script>
+  <script src="/js/contact.js"></script>
   <script src="/js/projects.js"></script>
   <script src="/js/portfolio.js"></script>
 </body>

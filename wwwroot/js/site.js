@@ -35,18 +35,4 @@
     });
   });
 
-  const form = document.getElementById("contact-form");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const to = window.portfolioContact?.email || "ddamulira41@gmail.com";
-      const name = form.name.value.trim();
-      const from = form.email.value.trim();
-      const subject = encodeURIComponent(form.subject.value.trim());
-      const body = encodeURIComponent(
-        `Name: ${name}\nEmail: ${from}\n\n${form.message.value.trim()}`
-      );
-      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-    });
-  }
 })();
