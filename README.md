@@ -80,6 +80,9 @@ Install the [.NET 10 Hosting Bundle](https://dotnet.microsoft.com/download) and 
 
 ## Customize
 
-- **Bio, skills, fallback projects:** `Services/PortfolioService.cs`
+- **All projects (personal, private, org, contributions) + diagrams:** `Data/work-catalog.json`
+- **Bio & skills:** `Services/PortfolioService.cs` or `vercel/profile.json`
+- **Private GitHub repos (local only):** set `GitHub:Token` in `appsettings.Development.json` (never commit tokens)
 - **Styles:** `wwwroot/css/site.css`
-- **Layout & nav:** `Pages/Shared/_Layout.cshtml`
+
+Each project can include a `mermaidDiagram` field for architecture diagrams (expand **Architecture diagram** on the card).

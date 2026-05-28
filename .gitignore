@@ -29,3 +29,4 @@ appsettings.*.local.json
 
 ## Cursor / editor
 .cursor/
+.vercel

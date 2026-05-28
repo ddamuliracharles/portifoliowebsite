@@ -2,6 +2,16 @@ import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from "fs";
 import { join } from "path";
 
 const profile = JSON.parse(readFileSync("vercel/profile.json", "utf8"));
+const catalog = JSON.parse(readFileSync("Data/work-catalog.json", "utf8"));
+profile.projects = catalog.projects;
+profile.stats = [
+  profile.stats[0],
+  { value: `${catalog.projects.length}+`, label: "Projects & contributions" },
+  profile.stats[2],
+];
+profile.aboutExtended =
+  "I'm a developer who cares about clean code and clear outcomes. My work spans backend APIs, interactive maps, LangChain agents, and client-facing websites—always with an eye on maintainability and what end users actually need.\n\nI learn in public on GitHub, contribute to team and organisation codebases, and ship private client work under NDA. If you need someone who can ship and communicate, let's talk.";
+
 const dist = "dist";
 const year = new Date().getFullYear();
 
@@ -9,6 +19,7 @@ rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 cpSync("wwwroot/css", join(dist, "css"), { recursive: true });
 cpSync("wwwroot/js/site.js", join(dist, "js/site.js"));
+cpSync("wwwroot/js/projects.js", join(dist, "js/projects.js"));
 cpSync("wwwroot/images", join(dist, "images"), { recursive: true });
 cpSync("vercel/portfolio.js", join(dist, "js/portfolio.js"));
 
@@ -49,6 +60,45 @@ const skillsHtml = profile.skillCategories
                   <ul>${c.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>
                 </article>`
   )
+  .join("");
+
+const kindLabels = {
+  personal: "Personal",
+  organization: "Organization",
+  contribution: "Open Source Contribution",
+  private: "Private",
+};
+
+const projectsHtml = profile.projects
+  .map((p) => {
+    const kind = p.kind || "personal";
+    const link =
+      p.url && !p.isPrivate
+        ? `<a class="work-card__link" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">View on GitHub</a>`
+        : p.isPrivate
+          ? `<span class="work-card__link work-card__link--muted">Private repository</span>`
+          : "";
+    const org = p.organization ? `<p class="work-card__org">${esc(p.organization)}</p>` : "";
+    const role = p.role ? `<p class="work-card__role">${esc(p.role)}</p>` : "";
+    const diagram = p.mermaidDiagram
+      ? `<details class="work-card__diagram"><summary>Architecture diagram</summary><pre class="mermaid">${esc(p.mermaidDiagram)}</pre></details>`
+      : "";
+    const tags = (p.tags || []).map((t) => `<li>${esc(t)}</li>`).join("");
+    return `
+      <article class="work-card" data-kind="${esc(kind)}">
+        <div class="work-card__preview">
+          <span class="work-card__badge work-card__badge--${esc(kind)}">${esc(kindLabels[kind] || "Personal")}</span>
+          <span class="work-card__preview-label">${esc(p.language || "")}</span>
+        </div>
+        <div class="work-card__body">
+          ${org}${role}${link}
+          <h3>${esc(p.name)}</h3>
+          <p>${esc(p.description)}</p>
+          <ul class="tag-list">${tags}</ul>
+          ${diagram}
+        </div>
+      </article>`;
+  })
   .join("");
 
 const html = `<!DOCTYPE html>
@@ -146,9 +196,16 @@ const html = `<!DOCTYPE html>
     </section>
     <section id="projects" class="section container">
       <span class="section-label">Work</span>
-      <h2 class="section-title">Selected projects.</h2>
-      <p class="section-desc">Recent work from <a href="${esc(profile.githubUrl)}" target="_blank" rel="noopener noreferrer">@${esc(profile.githubUsername)} on GitHub</a>.</p>
-      <div id="work-grid" class="work-grid"></div>
+      <h2 class="section-title">All my work.</h2>
+      <p class="section-desc">Personal repos, organisation delivery, open-source contributions, and private client systems. Also on <a href="${esc(profile.githubUrl)}" target="_blank" rel="noopener noreferrer">@${esc(profile.githubUsername)}</a>.</p>
+      <div class="work-filters" role="tablist" aria-label="Filter projects">
+        <button type="button" class="work-filter is-active" data-filter="all">All</button>
+        <button type="button" class="work-filter" data-filter="personal">Personal</button>
+        <button type="button" class="work-filter" data-filter="organization">Organisation</button>
+        <button type="button" class="work-filter" data-filter="contribution">Contributions</button>
+        <button type="button" class="work-filter" data-filter="private">Private</button>
+      </div>
+      <div id="work-grid" class="work-grid">${projectsHtml}</div>
     </section>
     <section id="contact" class="section section--contact">
       <div class="container">
@@ -181,7 +238,9 @@ const html = `<!DOCTYPE html>
   </footer>
   <script>window.__PROFILE__ = ${JSON.stringify(profile)};</script>
   <script>window.portfolioContact = { email: "${esc(profile.email)}" };</script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
   <script src="/js/site.js"></script>
+  <script src="/js/projects.js"></script>
   <script src="/js/portfolio.js"></script>
 </body>
 </html>`;

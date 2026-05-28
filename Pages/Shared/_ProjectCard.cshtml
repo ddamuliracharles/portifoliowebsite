@@ -1,0 +1,47 @@
+@model Portfolio.Models.ProjectItem
+
+<article class="work-card" data-kind="@Model.Kind">
+    <div class="work-card__preview">
+        <span class="work-card__badge work-card__badge--@Model.Kind">@Model.KindLabel</span>
+        @if (!string.IsNullOrEmpty(Model.Language))
+        {
+            <span class="work-card__preview-label">@Model.Language</span>
+        }
+    </div>
+    <div class="work-card__body">
+        @if (!string.IsNullOrEmpty(Model.Organization))
+        {
+            <p class="work-card__org">@Model.Organization</p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Role))
+        {
+            <p class="work-card__role">@Model.Role</p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Url) && !Model.IsPrivate)
+        {
+            <a class="work-card__link" href="@Model.Url" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        }
+        else if (Model.IsPrivate)
+        {
+            <span class="work-card__link work-card__link--muted">Private repository</span>
+        }
+        <h3>@Model.Name</h3>
+        <p>@Model.Description</p>
+        @if (Model.Tags.Count > 0)
+        {
+            <ul class="tag-list">
+                @foreach (var tag in Model.Tags)
+                {
+                    <li>@tag</li>
+                }
+            </ul>
+        }
+        @if (!string.IsNullOrEmpty(Model.MermaidDiagram))
+        {
+            <details class="work-card__diagram">
+                <summary>Architecture diagram</summary>
+                <pre class="mermaid">@Model.MermaidDiagram</pre>
+            </details>
+        }
+    </div>
+</article>

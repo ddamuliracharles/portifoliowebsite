@@ -1,14 +1,21 @@
+using System.Net.Http.Headers;
 using Portfolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IPortfolioService, PortfolioService>();
-builder.Services.AddHttpClient("GitHub", client =>
+builder.Services.AddHttpClient("GitHub", (sp, client) =>
 {
     client.BaseAddress = new Uri("https://api.github.com/");
     client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
     client.DefaultRequestHeaders.Add("User-Agent", "Portfolio-App");
+
+    var token = sp.GetRequiredService<IConfiguration>()["GitHub:Token"];
+    if (!string.IsNullOrWhiteSpace(token))
+    {
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
 });
 
 var app = builder.Build();

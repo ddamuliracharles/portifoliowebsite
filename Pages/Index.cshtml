@@ -104,30 +104,22 @@
 
 <section id="projects" class="section container">
     <span class="section-label">Work</span>
-    <h2 class="section-title">Selected projects.</h2>
-    <p class="section-desc">Recent work from <a href="@p.GitHubUrl" target="_blank" rel="noopener noreferrer">@@@p.GitHubUsername on GitHub</a>.</p>
-    <div class="work-grid">
+    <h2 class="section-title">All my work.</h2>
+    <p class="section-desc">
+        Personal repos, organisation delivery, open-source contributions, and private client systems.
+        Also on <a href="@p.GitHubUrl" target="_blank" rel="noopener noreferrer">@@@p.GitHubUsername</a>.
+    </p>
+    <div class="work-filters" role="tablist" aria-label="Filter projects">
+        <button type="button" class="work-filter is-active" data-filter="all">All</button>
+        <button type="button" class="work-filter" data-filter="personal">Personal</button>
+        <button type="button" class="work-filter" data-filter="organization">Organisation</button>
+        <button type="button" class="work-filter" data-filter="contribution">Contributions</button>
+        <button type="button" class="work-filter" data-filter="private">Private</button>
+    </div>
+    <div id="work-grid" class="work-grid">
         @foreach (var project in p.Projects)
         {
-            <article class="work-card">
-                <div class="work-card__preview">
-                    <span class="work-card__preview-label">@project.Language</span>
-                </div>
-                <div class="work-card__body">
-                    <a class="work-card__link" href="@project.Url" target="_blank" rel="noopener noreferrer">View Project</a>
-                    <h3>@project.Name</h3>
-                    <p>@project.Description</p>
-                    @if (project.Tags.Count > 0)
-                    {
-                        <ul class="tag-list">
-                            @foreach (var tag in project.Tags)
-                            {
-                                <li>@tag</li>
-                            }
-                        </ul>
-                    }
-                </div>
-            </article>
+            <partial name="_ProjectCard" model="project" />
         }
     </div>
 </section>
@@ -180,6 +172,8 @@
 </section>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script src="~/js/projects.js" asp-append-version="true"></script>
     <script>
         window.portfolioContact = { email: "@p.Email" };
     </script>

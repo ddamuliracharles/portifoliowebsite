@@ -512,10 +512,41 @@ main {
 }
 
 /* Projects */
+.work-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.work-filter {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.work-filter:hover,
+.work-filter.is-active {
+  color: var(--text);
+  border-color: var(--accent-2);
+  background: rgba(91, 157, 255, 0.12);
+}
+
 .work-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
+}
+
+.work-card.is-hidden {
+  display: none;
 }
 
 .work-card {
@@ -536,8 +567,72 @@ main {
   background: linear-gradient(135deg, rgba(124, 108, 240, 0.35), rgba(91, 157, 255, 0.2)),
     var(--bg-alt);
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
   padding: 1rem;
+}
+
+.work-card__badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.work-card__badge--personal { color: #86efac; }
+.work-card__badge--organization { color: #93c5fd; }
+.work-card__badge--contribution { color: #fcd34d; }
+.work-card__badge--private { color: #f9a8d4; }
+
+.work-card__org,
+.work-card__role {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.work-card__role {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.work-card__link--muted {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.work-card__diagram {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.work-card__diagram summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-2);
+  list-style: none;
+}
+
+.work-card__diagram summary::-webkit-details-marker {
+  display: none;
+}
+
+.work-card__diagram .mermaid {
+  margin-top: 0.75rem;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  overflow-x: auto;
+  font-size: 0.75rem;
 }
 
 .work-card__preview-label {
