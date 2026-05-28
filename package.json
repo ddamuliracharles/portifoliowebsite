@@ -1,0 +1,7 @@
+{
+  "name": "ddamulira-portfolio",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-vercel.mjs"
+  }
+}
