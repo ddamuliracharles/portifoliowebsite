@@ -116,7 +116,7 @@ const html = `<!DOCTYPE html>
 <body>
   <header class="site-header">
     <nav class="nav container" aria-label="Main">
-      <a class="nav__brand" href="/">Ddamulira<span>.dev</span></a>
+      <a class="nav__brand" href="/">ddamuliracharles<span>.dev</span></a>
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -232,7 +232,7 @@ const html = `<!DOCTYPE html>
   </main>
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <span class="site-footer__brand">Ddamulira.dev</span>
+      <span class="site-footer__brand">ddamuliracharles.dev</span>
       <p>&copy; ${year} ${esc(profile.fullName)}. All rights reserved.</p>
     </div>
   </footer>

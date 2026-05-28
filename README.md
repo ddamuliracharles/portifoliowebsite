@@ -42,7 +42,18 @@ npm run build
 npx vercel
 ```
 
-Follow the prompts to log in and deploy. Production URL: `https://your-project.vercel.app`.
+Follow the prompts to log in and deploy.
+
+**Production URL:** [https://ddamuliracharles.dev](https://ddamuliracharles.dev) (also [portifoliowebsite-gold.vercel.app](https://portifoliowebsite-gold.vercel.app))
+
+**Custom domain DNS** — at your `.dev` registrar, add:
+
+| Type | Name | Value |
+|------|------|--------|
+| A | `@` | `76.76.21.21` |
+| CNAME | `www` | `cname.vercel-dns.com` |
+
+Vercel will email you when DNS is verified.
 
 Edit static content in `vercel/profile.json`, then redeploy. The ASP.NET app (`dotnet run`) remains for local C# development.
 
