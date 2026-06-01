@@ -2,10 +2,11 @@
   const form = document.getElementById("contact-form");
   if (!form) return;
 
+  const RECIPIENT = "ddamulira41@gmail.com";
   const config = window.portfolioContact || {};
-  const toEmail = config.email || "ddamulira41@gmail.com";
+  const toEmail = (config.recipientEmail || config.email || RECIPIENT).toLowerCase();
   const formsubmitUrl =
-    config.formsubmitUrl || `https://formsubmit.co/ajax/${encodeURIComponent(toEmail)}`;
+    config.formsubmitUrl || `https://formsubmit.co/ajax/${toEmail}`;
 
   const statusEl = document.getElementById("contact-status");
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -65,17 +66,19 @@
     );
     window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
     setStatus(
-      "Your email app should open. If it did not, use the Email link on the left or copy ddamulira41@gmail.com.",
+      `Your email app should open. If not, email me directly at ${toEmail}.`,
       "info"
     );
   }
 
   async function sendViaFormSubmit(data) {
     const payload = new FormData();
-    payload.append("name", data.name);
-    payload.append("email", data.email);
+    payload.append("_to", toEmail);
     payload.append("_replyto", data.email);
     payload.append("_subject", `[Portfolio] ${data.subject} — from ${data.name}`);
+    payload.append("name", data.name);
+    payload.append("email", data.email);
+    payload.append("subject", data.subject);
     payload.append("message", data.message);
     payload.append("_template", "table");
     payload.append("_captcha", "false");
@@ -86,13 +89,10 @@
       headers: { Accept: "application/json" },
     });
 
-    if (!response.ok) {
-      throw new Error(`Send failed (${response.status})`);
-    }
-
     const result = await response.json().catch(() => ({}));
-    if (result.success === false) {
-      throw new Error(result.message || "Send failed");
+
+    if (!response.ok || result.success === false) {
+      throw new Error(result.message || `Send failed (${response.status})`);
     }
 
     return result;
@@ -111,7 +111,7 @@
       await sendViaFormSubmit(data);
       form.reset();
       setStatus(
-        "Message sent successfully. I will get back to you at the email you provided.",
+        `Message sent to ${toEmail}. I will reply to ${data.email} soon.`,
         "success"
       );
     } catch {

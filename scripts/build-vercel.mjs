@@ -2,7 +2,9 @@ import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from "fs";
 import { join } from "path";
 
 const profile = JSON.parse(readFileSync("vercel/profile.json", "utf8"));
+const contact = JSON.parse(readFileSync("Data/contact.json", "utf8"));
 const catalog = JSON.parse(readFileSync("Data/work-catalog.json", "utf8"));
+profile.email = contact.recipientEmail;
 profile.projects = catalog.projects;
 profile.stats = [
   profile.stats[0],
@@ -108,6 +110,7 @@ const html = `<!DOCTYPE html>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="${esc(profile.fullName)} — ${esc(profile.title)}. GIS, AI, and full-stack projects." />
+  <link rel="canonical" href="https://ddamuliracharles.vercel.app/" />
   <title>${esc(profile.fullName)} — ${esc(profile.title)}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -240,7 +243,11 @@ const html = `<!DOCTYPE html>
     </div>
   </footer>
   <script>window.__PROFILE__ = ${JSON.stringify(profile)};</script>
-  <script>window.portfolioContact = { email: "${esc(profile.email)}", formsubmitUrl: "https://formsubmit.co/ajax/${esc(profile.email)}" };</script>
+  <script>window.portfolioContact = ${JSON.stringify({
+    recipientEmail: contact.recipientEmail,
+    email: contact.recipientEmail,
+    formsubmitUrl: contact.formsubmitUrl,
+  })};</script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
   <script src="/js/site.js"></script>
   <script src="/js/contact.js"></script>

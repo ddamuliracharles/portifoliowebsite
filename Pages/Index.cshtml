@@ -178,10 +178,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <script src="~/js/projects.js" asp-append-version="true"></script>
     <script>
-        window.portfolioContact = {
-            email: "@p.Email",
-            formsubmitUrl: "https://formsubmit.co/ajax/@p.Email"
-        };
+        window.portfolioContact = @Html.Raw(Model.ContactConfigJson);
     </script>
     <script src="~/js/contact.js" asp-append-version="true"></script>
 }
