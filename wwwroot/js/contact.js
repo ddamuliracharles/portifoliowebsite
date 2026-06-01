@@ -2,7 +2,7 @@
   const form = document.getElementById("contact-form");
   if (!form) return;
 
-  const RECIPIENT = "ddamulira41@gmail.com";
+  const RECIPIENT = "ddamulira44@gmail.com";
   const config = window.portfolioContact || {};
   const toEmail = (config.recipientEmail || config.email || RECIPIENT).toLowerCase();
   const formsubmitUrl =

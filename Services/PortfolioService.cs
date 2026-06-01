@@ -31,7 +31,7 @@ public sealed class PortfolioService(
             I learn in public on GitHub, contribute to team and organisation codebases, and ship private
             client work under NDA. If you need someone who can ship and communicate, let's talk.
             """,
-        Email = "ddamulira41@gmail.com",
+        Email = "ddamulira44@gmail.com",
         Phone = "0786398295",
         Location = "Uganda",
         GitHubUsername = DefaultUsername,

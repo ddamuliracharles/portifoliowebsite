@@ -10,8 +10,8 @@ public class IndexModel(
     IConfiguration configuration) : PageModel
 {
     public PortfolioProfile Profile { get; private set; } = null!;
-    public string ContactRecipientEmail { get; private set; } = "ddamulira41@gmail.com";
-    public string FormSubmitUrl { get; private set; } = "https://formsubmit.co/ajax/ddamulira41@gmail.com";
+    public string ContactRecipientEmail { get; private set; } = "ddamulira44@gmail.com";
+    public string FormSubmitUrl { get; private set; } = "https://formsubmit.co/ajax/ddamulira44@gmail.com";
     public string ContactConfigJson { get; private set; } = "{}";
 
     public async Task OnGetAsync(CancellationToken cancellationToken)
