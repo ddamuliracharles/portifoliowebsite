@@ -44,7 +44,9 @@ npx vercel
 
 Follow the prompts to log in and deploy.
 
-**Production URL:** [https://ddamuliracharles.vercel.app](https://ddamuliracharles.vercel.app) (custom domain [ddamuliracharles.dev](https://ddamuliracharles.dev) after you register it)
+**Production URL:** [https://ddamuliracharles.vercel.app](https://ddamuliracharles.vercel.app)
+
+**Custom domain:** [ddamuliracharles.dev](https://ddamuliracharles.dev) is on Vercel but DNS is not live yet. At your registrar, either set **A** `@` → `76.76.21.21` or nameservers `ns1.vercel-dns.com` / `ns2.vercel-dns.com`. See [docs/DOMAIN-SETUP.md](docs/DOMAIN-SETUP.md).
 
 **Custom domain DNS** — at your `.dev` registrar, add:
 

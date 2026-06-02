@@ -8,21 +8,48 @@
   const formsubmitUrl =
     config.formsubmitUrl || `https://formsubmit.co/ajax/${toEmail}`;
 
-  const statusEl = document.getElementById("contact-status");
+  const feedbackEl = document.getElementById("contact-feedback");
+  const feedbackTitle = document.getElementById("contact-feedback-title");
+  const feedbackDetail = document.getElementById("contact-feedback-detail");
+  const feedbackIcon = document.getElementById("contact-feedback-icon");
   const submitBtn = form.querySelector('button[type="submit"]');
   const defaultBtnText = submitBtn?.textContent || "Send Message";
 
-  function setStatus(message, type) {
-    if (!statusEl) return;
-    statusEl.textContent = message;
-    statusEl.className = `contact-status contact-status--${type}`;
-    statusEl.hidden = !message;
+  const icons = {
+    success: "✓",
+    error: "✕",
+    info: "ℹ",
+    loading: "…",
+    warning: "!",
+  };
+
+  function showFeedback(title, detail, type) {
+    if (!feedbackEl) return;
+
+    feedbackEl.hidden = false;
+    feedbackEl.className = `contact-feedback contact-feedback--${type}`;
+    if (feedbackTitle) feedbackTitle.textContent = title;
+    if (feedbackDetail) feedbackDetail.textContent = detail || "";
+    if (feedbackIcon) feedbackIcon.textContent = icons[type] || "";
+
+    feedbackEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function hideFeedback() {
+    if (feedbackEl) feedbackEl.hidden = true;
   }
 
   function setLoading(loading) {
     if (submitBtn) {
       submitBtn.disabled = loading;
       submitBtn.textContent = loading ? "Sending…" : defaultBtnText;
+    }
+    if (loading) {
+      showFeedback(
+        "Sending your message…",
+        "Please wait while we deliver your message.",
+        "loading"
+      );
     }
   }
 
@@ -33,42 +60,34 @@
     const message = form.message?.value.trim();
 
     if (!name) {
-      setStatus("Please enter your name.", "error");
+      showFeedback("Message not sent", "Please enter your name.", "error");
       form.name?.focus();
       return null;
     }
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus("Please enter a valid email address.", "error");
+      showFeedback("Message not sent", "Please enter a valid email address.", "error");
       form.email?.focus();
       return null;
     }
 
     if (!subject) {
-      setStatus("Please enter a subject.", "error");
+      showFeedback("Message not sent", "Please enter a subject.", "error");
       form.subject?.focus();
       return null;
     }
 
     if (!message || message.length < 10) {
-      setStatus("Please enter a message (at least 10 characters).", "error");
+      showFeedback(
+        "Message not sent",
+        "Please enter a message with at least 10 characters.",
+        "error"
+      );
       form.message?.focus();
       return null;
     }
 
     return { name, email, subject, message };
-  }
-
-  function openMailto(data) {
-    const subject = encodeURIComponent(`[Portfolio] ${data.subject} — from ${data.name}`);
-    const body = encodeURIComponent(
-      `Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`
-    );
-    window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
-    setStatus(
-      `Your email app should open. If not, email me directly at ${toEmail}.`,
-      "info"
-    );
   }
 
   async function sendViaFormSubmit(data) {
@@ -92,7 +111,12 @@
     const result = await response.json().catch(() => ({}));
 
     if (!response.ok || result.success === false) {
-      throw new Error(result.message || `Send failed (${response.status})`);
+      const detail =
+        result.message ||
+        (response.status === 522
+          ? "The mail service is temporarily unavailable. Try again in a few minutes."
+          : `Server returned error ${response.status}.`);
+      throw new Error(detail);
     }
 
     return result;
@@ -100,7 +124,7 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    setStatus("", "");
+    hideFeedback();
 
     const data = validate();
     if (!data) return;
@@ -110,12 +134,18 @@
     try {
       await sendViaFormSubmit(data);
       form.reset();
-      setStatus(
-        `Message sent to ${toEmail}. I will reply to ${data.email} soon.`,
+      showFeedback(
+        "Message sent successfully",
+        `Your message was delivered to ${toEmail}. I will reply to ${data.email} as soon as possible.`,
         "success"
       );
-    } catch {
-      openMailto(data);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : "Unknown error.";
+      showFeedback(
+        "Message was not sent",
+        `${detail} Try again, or email ${toEmail} directly.`,
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -126,9 +156,9 @@
     copyBtn.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(toEmail);
-        setStatus("Email address copied to clipboard.", "success");
+        showFeedback("Copied", `${toEmail} copied to clipboard.`, "success");
       } catch {
-        setStatus(`Email: ${toEmail}`, "info");
+        showFeedback("Email address", toEmail, "info");
       }
     });
   }

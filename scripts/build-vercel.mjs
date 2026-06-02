@@ -229,7 +229,13 @@ const html = `<!DOCTYPE html>
             <div class="form-row"><label for="email">Your email</label><input type="email" id="email" name="email" required autocomplete="email" maxlength="254" /></div>
             <div class="form-row"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required maxlength="200" /></div>
             <div class="form-row"><label for="message">Message</label><textarea id="message" name="message" rows="5" required minlength="10" maxlength="5000"></textarea></div>
-            <p id="contact-status" class="contact-status" role="status" aria-live="polite" hidden></p>
+            <div id="contact-feedback" class="contact-feedback" role="alert" aria-live="assertive" aria-atomic="true" hidden>
+              <span id="contact-feedback-icon" class="contact-feedback__icon" aria-hidden="true"></span>
+              <div class="contact-feedback__body">
+                <strong id="contact-feedback-title"></strong>
+                <p id="contact-feedback-detail"></p>
+              </div>
+            </div>
             <button type="submit" class="btn btn--primary btn--full">Send Message</button>
           </form>
         </div>
